@@ -1,0 +1,9 @@
+id: 94ggr6dw2sb8hh82gkqiw3e88fgn7pphxr7i3rx5hh3n8ys6
+name: zshuffle
+main: src/main.zig
+license: AGPL-3.0
+description: write-minimizing fischer-yates shuffle
+root_dependencies:
+  - src: git https://github.com/hmusgrave/zkwargs
+dependencies:
+  - src: git https://github.com/hmusgrave/zkwargs
