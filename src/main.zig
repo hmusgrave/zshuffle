@@ -6,6 +6,7 @@ const zkwargs = @import("zkwargs");
 
 pub fn shuffle(rand: Random, data: anytype, _kwargs: anytype) ShuffleRtnT(@TypeOf(data[0]), @TypeOf(_kwargs)) {
     const kwargs = zkwargs.Options(ShuffleOpt).parse(_kwargs);
+    const T = @TypeOf(data[0]);
     if (comptime @hasField(@TypeOf(kwargs), "allocator")) {
         // Problem tends to be bandwidth-limited and behaves poorly with
         // parallel approaches. Our general strategy is to do a fischer-
@@ -15,7 +16,6 @@ pub fn shuffle(rand: Random, data: anytype, _kwargs: anytype) ShuffleRtnT(@TypeO
         //
         // For small types this results in around 2n writes, asymptotically
         // approaching n writes for shuffles of slices of large types.
-        const T = @TypeOf(data[0]);
         if (indices_fit_in(data, u16) and comptime external_array_saves_bandwidth(T, u16)) {
             return idx_shuffle(kwargs.allocator, rand, data, u16);
         }
@@ -27,17 +27,7 @@ pub fn shuffle(rand: Random, data: anytype, _kwargs: anytype) ShuffleRtnT(@TypeO
         }
         return copy_shuffle(kwargs.allocator, rand, data);
     } else {
-        inplace_shuffle(rand, data);
-    }
-}
-
-fn inplace_shuffle(rand: Random, data: anytype) void {
-    var i: usize = 0;
-    while (i < data.len) : (i += 1) {
-        const j = rand.intRangeLessThan(usize, i, data.len);
-        const tmp = data[i];
-        data[i] = data[j];
-        data[j] = tmp;
+        rand.shuffle(T, data);
     }
 }
 
@@ -45,18 +35,18 @@ fn copy_shuffle(allocator: Allocator, rand: Random, data: anytype) ![]@TypeOf(da
     var rtn = try allocator.alloc(@TypeOf(data[0]), data.len);
     for (rtn) |*x, i|
         x.* = data[i];
-    inplace_shuffle(rand, rtn);
+    rand.shuffle(@TypeOf(data[0]), rtn);
     return rtn;
 }
 
 fn idx_shuffle(allocator: Allocator, rand: Random, data: anytype, comptime IdxT: type) ![]@TypeOf(data[0]) {
     var rtn = try allocator.alloc(@TypeOf(data[0]), data.len);
     errdefer allocator.free(rtn);
-    var intermediate = try allocator.alloc(usize, data.len);
+    var intermediate = try allocator.alloc(IdxT, data.len);
     defer allocator.free(intermediate);
     for (intermediate) |*x, i|
         x.* = @intCast(IdxT, i);
-    inplace_shuffle(rand, intermediate);
+    rand.shuffle(IdxT, intermediate);
     for (rtn) |*x, i|
         x.* = data[@intCast(usize, intermediate[i])];
     return rtn;
