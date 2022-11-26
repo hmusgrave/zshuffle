@@ -24,6 +24,7 @@ const allocator = std.testing.allocator;
 
 // Generate some data to shuffle
 var data = allocator.alloc(usize, 1234);
+defer allocator.free(data);
 for (data) |*x,i|
     x.* = i;
 
