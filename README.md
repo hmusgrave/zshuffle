@@ -31,6 +31,6 @@ for (data) |*x,i|
 shuffle(rand, data, .{});
 
 // Or else you can shuffle into a new result buffer
-var shuffled = shuffle(rand, data, .{.allocator = allocator});
+var shuffled = try shuffle(rand, data, .{.allocator = allocator});
 defer allocator.free(shuffled);
 ```
