@@ -55,7 +55,7 @@ fn idx_shuffle(allocator: Allocator, rand: Random, data: anytype, comptime IdxT:
 const ShuffleOpt = struct {
     pub fn allocator(comptime MaybeT: ?type) ?type {
         zkwargs.allowed_types(MaybeT, "allocator", .{Allocator});
-        return null;
+        return Allocator;
     }
 };
 
