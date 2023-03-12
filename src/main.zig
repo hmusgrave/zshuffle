@@ -33,7 +33,7 @@ pub fn shuffle(rand: Random, data: anytype, _kwargs: anytype) ShuffleRtnT(@TypeO
 
 fn copy_shuffle(allocator: Allocator, rand: Random, data: anytype) ![]@TypeOf(data[0]) {
     var rtn = try allocator.alloc(@TypeOf(data[0]), data.len);
-    for (rtn) |*x, i|
+    for (rtn, 0..) |*x, i|
         x.* = data[i];
     rand.shuffle(@TypeOf(data[0]), rtn);
     return rtn;
@@ -44,10 +44,10 @@ fn idx_shuffle(allocator: Allocator, rand: Random, data: anytype, comptime IdxT:
     errdefer allocator.free(rtn);
     var intermediate = try allocator.alloc(IdxT, data.len);
     defer allocator.free(intermediate);
-    for (intermediate) |*x, i|
+    for (intermediate, 0..) |*x, i|
         x.* = @intCast(IdxT, i);
     rand.shuffle(IdxT, intermediate);
-    for (rtn) |*x, i|
+    for (rtn, 0..) |*x, i|
         x.* = data[@intCast(usize, intermediate[i])];
     return rtn;
 }
