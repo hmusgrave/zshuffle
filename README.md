@@ -8,7 +8,32 @@ Shuffling large amounts of data is mostly bandwidth-bound. When the individual e
 
 ## Installation
 
-Choose your favorite method for vendoring this code into your repository. I've been using [zigmod](https://github.com/nektro/zigmod) to lately, and it's pretty painless. I also generally like [git-subrepo](https://github.com/ingydotnet/git-subrepo), copy-paste is always a winner, and whenever the official package manager is up we'll be there too.
+Copy-paste or [git-subrepo](https://github.com/ingydotnet/git-subrepo) or whatever. Also, ZIG HAS A PACKAGE MANAGER NOW!!! Use it with something like the following.
+
+```zig
+// build.zig.zon
+.{
+    .name = "foo",
+    .version = "0.0.0",
+    .dependencies = .{
+        .zshuffle = .{
+	   .url = "https://github.com/hmusgrave/zshuffle/archive/refs/tags/z11-0.0.1.tar.gz",
+            .hash = "12207b3b8d84848638c2561e5fc9f84bd3e48a6f8139b40e18430f967c4e26c142ec",
+        },
+    },
+}
+```
+
+```zig
+// build.zig
+const zshuffle_pkg = b.dependency("zshuffle", .{
+    .target = target,
+    .optimize = optimize,
+});
+const zshuffle_mod = zshuffle_pkg.module("zshuffle");
+exe.addModule("zshuffle", zshuffle_mod);
+exe_tests.addModule("zshuffle", zshuffle_mod);
+```
 
 ## Examples
 
