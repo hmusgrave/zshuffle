@@ -15,16 +15,19 @@ pub fn build(b: *std.Build) void {
     // set a preferred release mode, allowing the user to decide how to optimize.
     const optimize = b.standardOptimizeOption(.{});
 
-    const module = b.addModule("zshuffle", .{
-        .source_file = .{ .path = "src/main.zig" },
-    });
-    _ = module;
-
     const zkwargs_pkg = b.dependency("zkwargs", .{
         .target = target,
         .optimize = optimize,
     });
     const zkwargs_mod = zkwargs_pkg.module("zkwargs");
+
+    const module = b.addModule("zshuffle", .{
+        .source_file = .{ .path = "src/main.zig" },
+        .dependencies = &.{
+            .{ .name = "zkwargs", .module = zkwargs_mod },
+        },
+    });
+    _ = module;
 
     const lib = b.addStaticLibrary(.{
         .name = "zshuffle",
