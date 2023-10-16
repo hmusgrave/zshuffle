@@ -45,10 +45,10 @@ fn idx_shuffle(allocator: Allocator, rand: Random, data: anytype, comptime IdxT:
     var intermediate = try allocator.alloc(IdxT, data.len);
     defer allocator.free(intermediate);
     for (intermediate, 0..) |*x, i|
-        x.* = @intCast(IdxT, i);
+        x.* = @intCast(i);
     rand.shuffle(IdxT, intermediate);
     for (rtn, 0..) |*x, i|
-        x.* = data[@intCast(usize, intermediate[i])];
+        x.* = data[@intCast(intermediate[i])];
     return rtn;
 }
 
