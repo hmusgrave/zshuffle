@@ -58,3 +58,6 @@ shuffle(rand, data, .{});
 var shuffled = try shuffle(rand, data, .{.allocator = allocator});
 defer allocator.free(shuffled);
 ```
+
+## Status
+Working and builds for Zig 0.11 and 0.12. There isn't much in the way of marketing or other niceties other than this README and reading the source (there also isn't much source, so that ought to be easy).
