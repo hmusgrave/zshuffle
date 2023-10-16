@@ -3,7 +3,7 @@
     .version = "0.0.0",
     .dependencies = .{
         .zkwargs = .{
-            .url = "https://github.com/MadLittleMods/zkwargs/archive/ac419c94c81cb696017434e0f76c3e767b472ede.tar.gz",
+            .url = "https://github.com/hmusgrave/zkwargs/archive/4b23becf731ecaac1f29d629943d11b23c7802e8.tar.gz",
             .hash = "1220f6fd467fd42cd5ec98a360caacdcda9d3b9c3557fdcdef285cabbdee3c7c79dc",
         },
     },
