@@ -3,8 +3,8 @@
     .version = "0.0.0",
     .dependencies = .{
         .zkwargs = .{
-	    .url = "https://github.com/hmusgrave/zkwargs/archive/refs/tags/z11-0.0.0.tar.gz",
-            .hash = "1220382447b50be7f14b48d17baf0286c1adb297f6edf4a4c00b008841c07cadb00a",
+            .url = "https://github.com/MadLittleMods/zkwargs/archive/ac419c94c81cb696017434e0f76c3e767b472ede.tar.gz",
+            .hash = "1220f6fd467fd42cd5ec98a360caacdcda9d3b9c3557fdcdef285cabbdee3c7c79dc",
         },
     },
 }
