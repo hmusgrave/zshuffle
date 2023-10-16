@@ -8,8 +8,6 @@ Shuffling large amounts of data is mostly bandwidth-bound. When the individual e
 
 ## Installation
 
-Copy-paste or [git-subrepo](https://github.com/ingydotnet/git-subrepo) or whatever. Also, ZIG HAS A PACKAGE MANAGER NOW!!! Use it with something like the following.
-
 ```zig
 // build.zig.zon
 .{
@@ -17,8 +15,8 @@ Copy-paste or [git-subrepo](https://github.com/ingydotnet/git-subrepo) or whatev
     .version = "0.0.0",
     .dependencies = .{
         .zshuffle = .{
-	   .url = "https://github.com/hmusgrave/zshuffle/archive/refs/tags/z11-0.0.1.tar.gz",
-            .hash = "12207b3b8d84848638c2561e5fc9f84bd3e48a6f8139b40e18430f967c4e26c142ec",
+            .url = "https://github.com/hmusgrave/zshuffle/archive/7cc5d08a8dc849b22078d4cff728e0859941af3d.tar.gz",
+            .hash = "1220416f31bac21c9f69c2493110064324b2ba9e0257ce0db16fb4f94657124d7f39",
         },
     },
 }
