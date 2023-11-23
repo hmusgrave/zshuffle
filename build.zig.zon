@@ -2,7 +2,7 @@
     .name = "zshuffle",
     .version = "0.0.0",
     .paths = .{
-        ".",
+        "",
     },
     .dependencies = .{
         .zkwargs = .{
