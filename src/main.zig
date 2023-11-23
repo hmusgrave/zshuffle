@@ -32,7 +32,7 @@ pub fn shuffle(rand: Random, data: anytype, _kwargs: anytype) ShuffleRtnT(@TypeO
 }
 
 fn copy_shuffle(allocator: Allocator, rand: Random, data: anytype) ![]@TypeOf(data[0]) {
-    var rtn = try allocator.alloc(@TypeOf(data[0]), data.len);
+    const rtn = try allocator.alloc(@TypeOf(data[0]), data.len);
     for (rtn, 0..) |*x, i|
         x.* = data[i];
     rand.shuffle(@TypeOf(data[0]), rtn);
@@ -40,9 +40,9 @@ fn copy_shuffle(allocator: Allocator, rand: Random, data: anytype) ![]@TypeOf(da
 }
 
 fn idx_shuffle(allocator: Allocator, rand: Random, data: anytype, comptime IdxT: type) ![]@TypeOf(data[0]) {
-    var rtn = try allocator.alloc(@TypeOf(data[0]), data.len);
+    const rtn = try allocator.alloc(@TypeOf(data[0]), data.len);
     errdefer allocator.free(rtn);
-    var intermediate = try allocator.alloc(IdxT, data.len);
+    const intermediate = try allocator.alloc(IdxT, data.len);
     defer allocator.free(intermediate);
     for (intermediate, 0..) |*x, i|
         x.* = @intCast(i);
@@ -89,8 +89,8 @@ test "doesn't crash" {
     std.debug.print("\n", .{});
     const allocator = std.testing.allocator;
     var ri = DefaultPrng.init(42);
-    var rand = ri.random();
-    var data = try allocator.alloc(f64, 10000);
+    const rand = ri.random();
+    const data = try allocator.alloc(f64, 10000);
     defer allocator.free(data);
     shuffle(rand, data, .{});
     allocator.free(try shuffle(rand, data, .{ .allocator = allocator }));

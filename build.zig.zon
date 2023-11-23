@@ -1,6 +1,9 @@
 .{
     .name = "zshuffle",
     .version = "0.0.0",
+    .paths = .{
+        ".",
+    },
     .dependencies = .{
         .zkwargs = .{
             .url = "https://github.com/hmusgrave/zkwargs/archive/4b23becf731ecaac1f29d629943d11b23c7802e8.tar.gz",
